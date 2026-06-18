@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Панель управления</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <!-- ЭКРАН ВХОДА -->
+  <div id="login-screen">
+    <div class="login-box">
+      <p class="label">Панель управления</p>
+      <h1>Вход</h1>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Пароль</label>
+        <input type="password" id="login-password" placeholder="••••••••">
+      </div>
+      <button class="btn" id="login-btn">Войти</button>
+      <p class="form-status" id="login-error"></p>
+    </div>
+  </div>
+
+  <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+  <div id="admin-screen" style="display:none">
+
+    <header>
+      <a class="logo" href="../index.html">Юлия Маликова</a>
+      <div style="display:flex;align-items:center;gap:24px">
+        <span class="label">Панель управления</span>
+        <button class="btn" id="logout-btn">Выйти</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+
+      <div class="admin-toolbar">
+        <h2>Картины</h2>
+        <button class="btn" id="add-btn">+ Добавить картину</button>
+      </div>
+
+      <div class="admin-grid" id="admin-grid">
+        <!-- карточки картин -->
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ -->
+  <div class="modal" id="edit-modal">
+    <div class="modal-overlay" id="edit-overlay"></div>
+    <div class="edit-modal-content">
+      <h2 id="edit-title">Добавить картину</h2>
+
+      <div class="edit-form">
+        <div class="form-group">
+          <label>Название *</label>
+          <input type="text" id="edit-name">
+        </div>
+        <div class="form-group">
+          <label>Описание</label>
+          <textarea id="edit-desc" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Категория</label>
+            <select id="edit-category">
+              <option value="Пейзаж">Пейзаж</option>
+              <option value="Портрет">Портрет</option>
+              <option value="Абстракция">Абстракция</option>
+              <option value="Натюрморт">Натюрморт</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Год</label>
+            <input type="number" id="edit-year" placeholder="2024">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Размер</label>
+            <input type="text" id="edit-size" placeholder="60x80 см">
+          </div>
+          <div class="form-group">
+            <label>Материал</label>
+            <input type="text" id="edit-material" placeholder="Акварель, бумага">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Цена (необязательно)</label>
+          <input type="text" id="edit-price" placeholder="50 000 ₸">
+        </div>
+        <div class="form-group">
+          <label>Фото картины *</label>
+          <input type="file" id="edit-image" accept="image/*">
+          <img id="edit-preview" src="" alt="" style="display:none;margin-top:12px;max-height:200px;border-radius:4px">
+        </div>
+        <div class="form-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="edit-visible" checked>
+            Показывать на сайте
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="edit-featured">
+            На главной странице
+          </label>
+        </div>
+      </div>
+
+      <div class="edit-actions">
+        <button class="btn" id="edit-cancel">Отмена</button>
+        <button class="btn btn-primary" id="edit-save">Сохранить</button>
+      </div>
+      <p class="form-status" id="edit-status"></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

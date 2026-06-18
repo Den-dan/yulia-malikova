@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея — Юлия Маликова</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="index.html">Юлия Маликова</a>
+    <nav>
+      <a href="gallery.html" class="active">Галерея</a>
+      <a href="about.html">О художнике</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="gallery-header">
+      <p class="label">Все работы</p>
+      <h1>Галерея</h1>
+    </section>
+
+    <section class="gallery-filters">
+      <button class="filter-btn active" data-category="all">Все</button>
+      <button class="filter-btn" data-category="Пейзаж">Пейзажи</button>
+      <button class="filter-btn" data-category="Портрет">Портреты</button>
+      <button class="filter-btn" data-category="Абстракция">Абстракция</button>
+      <button class="filter-btn" data-category="Натюрморт">Натюрморт</button>
+    </section>
+
+    <section class="gallery-grid" id="gallery-grid">
+      <!-- карточки подгрузятся из Supabase -->
+    </section>
+
+  </main>
+
+  <!-- МОДАЛЬНОЕ ОКНО -->
+  <div class="modal" id="modal">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">✕</button>
+      <button class="modal-prev" id="modal-prev">←</button>
+      <button class="modal-next" id="modal-next">→</button>
+      <div class="modal-image-wrap">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-info">
+        <p class="label" id="modal-category"></p>
+        <h2 id="modal-title"></h2>
+        <p id="modal-desc"></p>
+        <div class="modal-meta">
+          <span id="modal-size"></span>
+          <span id="modal-material"></span>
+          <span id="modal-year"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2025 Юлия Маликова</span>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Telegram</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>

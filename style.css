@@ -1,0 +1,501 @@
+/* ===== ШРИФТЫ ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,300&family=Raleway:wght@400;500&display=swap');
+
+/* ===== ПЕРЕМЕННЫЕ ===== */
+:root {
+  --bg:        #FDFAF6;
+  --bg-accent: #F2EDE4;
+  --sage:      #8FAD8A;
+  --beige:     #D4B896;
+  --brown:     #7A5C45;
+  --text:      #2C2520;
+  --border:    #E0D9D0;
+}
+
+/* ===== СБРОС ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== ТИПОГРАФИКА ===== */
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+h3 { font-size: 1.25rem; }
+
+.label {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+/* ===== ШАПКА ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+nav {
+  display: flex;
+  gap: 36px;
+}
+
+nav a {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--brown);
+}
+
+nav a.active {
+  color: var(--brown);
+  border-bottom: 1px solid var(--brown);
+  padding-bottom: 2px;
+}
+
+/* ===== ПОДВАЛ ===== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--brown);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
+/* ===== КНОПКА ===== */
+.btn {
+  display: inline-block;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.btn:hover {
+  color: var(--brown);
+  border-color: var(--brown);
+}
+
+/* ===== АДАПТИВ ===== */
+@media (max-width: 768px) {
+  header {
+    padding: 16px 20px;
+  }
+
+  nav {
+    gap: 20px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 24px 20px;
+  }
+}
+
+/* ===== ГЛАВНАЯ: HERO ===== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 80px 48px;
+  background: var(--bg-accent);
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero-desc {
+  color: var(--brown);
+  font-size: 0.95rem;
+}
+
+.hero-image {
+  background: var(--beige);
+  border-radius: 4px;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+/* ===== ГЛАВНАЯ: РАБОТЫ ===== */
+.works {
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.painting-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--bg-accent);
+}
+
+.painting-card img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.painting-card:hover img {
+  transform: scale(1.04);
+}
+
+.painting-card .card-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: var(--bg);
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+/* ===== ГЛАВНАЯ: О ХУДОЖНИКЕ ===== */
+.about-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 80px 48px;
+  background: var(--bg-accent);
+}
+
+.about-preview-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-preview-image {
+  background: var(--border);
+  border-radius: 4px;
+  aspect-ratio: 3/4;
+  max-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brown);
+  font-size: 0.85rem;
+}
+
+/* ===== АДАПТИВ ГЛАВНОЙ ===== */
+@media (max-width: 768px) {
+  .hero,
+  .about-preview {
+    grid-template-columns: 1fr;
+    padding: 48px 20px;
+  }
+
+  .works {
+    padding: 48px 20px;
+  }
+
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== О ХУДОЖНИКЕ ===== */
+.about-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding: 80px 48px;
+}
+
+.about-hero-image {
+  background: var(--bg-accent);
+  border-radius: 4px;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brown);
+  font-size: 0.85rem;
+}
+
+.about-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-hero-text p {
+  color: var(--brown);
+  line-height: 1.8;
+}
+
+.about-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 0 48px 80px;
+  border-top: 1px solid var(--border);
+  padding-top: 48px;
+}
+
+.about-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-block ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-block ul li {
+  font-size: 0.9rem;
+  color: var(--text);
+  padding-left: 16px;
+  border-left: 2px solid var(--beige);
+}
+
+.about-quote {
+  background: var(--bg-accent);
+  padding: 80px 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.about-quote blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 300;
+  color: var(--text);
+  max-width: 700px;
+  line-height: 1.4;
+}
+
+.about-quote cite {
+  font-size: 0.85rem;
+  color: var(--brown);
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .about-hero,
+  .about-details {
+    grid-template-columns: 1fr;
+    padding: 48px 20px;
+  }
+
+  .about-quote {
+    padding: 48px 20px;
+  }
+}
+
+/* ===== КОНТАКТЫ ===== */
+.contacts-hero {
+  padding: 80px 48px 48px;
+  background: var(--bg-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contacts-hero p:last-child {
+  color: var(--brown);
+  max-width: 500px;
+}
+
+.contacts-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding: 64px 48px 80px;
+}
+
+.contacts-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.form-group input,
+.form-group textarea {
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 12px 16px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--brown);
+}
+
+.form-status {
+  font-size: 0.85rem;
+  color: var(--sage);
+  min-height: 20px;
+}
+
+.contacts-info {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 8px;
+}
+
+.contacts-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contacts-block a {
+  color: var(--brown);
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.contacts-block a:hover {
+  color: var(--text);
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contacts-block p:last-child {
+  color: var(--brown);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .contacts-hero {
+    padding: 48px 20px 32px;
+  }
+
+  .contacts-body {
+    grid-template-columns: 1fr;
+    padding: 40px 20px 60px;
+    gap: 40px;
+  }
+}
