@@ -34,6 +34,7 @@ function showAdmin() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('admin-screen').style.display = 'block';
   loadPaintings();
+  loadSiteImages();
 }
 
 // ЗАГРУЗКА КАРТИН
@@ -41,7 +42,7 @@ async function loadPaintings() {
   const { data, error } = await db
     .from('paintings')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('sort_order', { ascending: true });
 
   if (error) return;
   paintings = data;
@@ -52,9 +53,19 @@ function renderPaintings() {
   const grid = document.getElementById('admin-grid');
   grid.innerHTML = paintings.map(p => `
     <div class="admin-card">
-      <img src="${p.image_url || ''}" alt="${p.title}" 
+      <img src="${p.image_url || ''}" alt="${p.title}"
            onerror="this.style.display='none'">
       <div class="admin-card-info">
+        <div class="admin-card-order">
+          <span class="label">Порядок</span>
+          <input
+            type="number"
+            class="order-input"
+            value="${p.sort_order || 0}"
+            min="0"
+            onchange="updateOrder('${p.id}', this.value)"
+          >
+        </div>
         <h3>${p.title}</h3>
         <span class="label">${p.category || ''}</span>
         ${!p.is_visible ? '<span class="hidden-badge">Скрыта</span>' : ''}
@@ -176,6 +187,18 @@ document.getElementById('edit-save').addEventListener('click', async () => {
   }
 });
 
+async function updateOrder(id, value) {
+  await db.from('paintings').update({ sort_order: parseInt(value) || 0 }).eq('id', id);
+  const { data } = await db
+    .from('paintings')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  if (data) {
+    paintings = data;
+    renderPaintings();
+  }
+}
+
 // СКРЫТЬ/ПОКАЗАТЬ
 async function toggleVisible(id, current) {
   await db.from('paintings').update({ is_visible: !current }).eq('id', id);
@@ -199,3 +222,54 @@ document.getElementById('edit-cancel').onclick = closeEditModal;
 document.getElementById('edit-overlay').onclick = closeEditModal;
 
 checkSession();
+
+// ЗАГРУЗКА HERO И ФОТО ХУДОЖНИКА
+async function loadSiteImages() {
+  const { data: heroData } = db.storage.from('artist').getPublicUrl('hero.jpg');
+  const { data: artistData } = db.storage.from('artist').getPublicUrl('artist.jpg');
+
+  const heroImg = document.getElementById('hero-preview-img');
+  const artistImg = document.getElementById('artist-preview-img');
+
+  heroImg.src = heroData.publicUrl + '?t=' + Date.now();
+  heroImg.onload = () => {
+    heroImg.style.display = 'block';
+    document.getElementById('hero-preview-placeholder').style.display = 'none';
+  };
+
+  artistImg.src = artistData.publicUrl + '?t=' + Date.now();
+  artistImg.onload = () => {
+    artistImg.style.display = 'block';
+    document.getElementById('artist-preview-placeholder').style.display = 'none';
+  };
+}
+
+async function uploadSiteImage(file, filename, statusId) {
+  const status = document.getElementById(statusId);
+  status.textContent = 'Загружаем...';
+
+  await db.storage.from('artist').remove([filename]);
+
+  const { error } = await db.storage.from('artist').upload(filename, file, {
+    upsert: true,
+    contentType: file.type,
+  });
+
+  if (error) {
+    status.textContent = 'Ошибка загрузки';
+  } else {
+    status.textContent = 'Сохранено!';
+    setTimeout(() => status.textContent = '', 2000);
+    loadSiteImages();
+  }
+}
+
+document.getElementById('hero-upload').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) uploadSiteImage(file, 'hero.jpg', 'hero-status');
+});
+
+document.getElementById('artist-upload').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) uploadSiteImage(file, 'artist.jpg', 'artist-status');
+});
