@@ -11,7 +11,7 @@ async function loadGallery(category = 'all') {
       .from('paintings')
       .select('*')
       .eq('is_visible', true)
-      .order('created_at', { ascending: false });
+      .order('sort_order', { ascending: true });
 
     if (error || !data) {
       grid.innerHTML = '<p style="color:var(--brown);padding:20px">Работы скоро появятся</p>';
@@ -42,6 +42,7 @@ function openModal(index) {
   document.getElementById('modal-size').textContent = p.size ? `Размер: ${p.size}` : '';
   document.getElementById('modal-material').textContent = p.material ? `Материал: ${p.material}` : '';
   document.getElementById('modal-year').textContent = p.year ? `Год: ${p.year}` : '';
+  document.getElementById('modal-price').textContent = p.price ? `Цена: ${p.price}` : '';
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
