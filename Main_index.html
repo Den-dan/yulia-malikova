@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Юлия Маликова — Художник</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header>
+    <a class="logo" href="index.html">Юлия Маликова</a>
+    <nav>
+      <a href="gallery.html">Галерея</a>
+      <a href="about.html">О художнике</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <!-- КОНТЕНТ СТРАНИЦЫ — добавим на Шаге 3 -->
+  <main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="label">Акварель · Алматы</p>
+      <h1>Картины которые оживляют пространство</h1>
+      <p class="hero-desc">Оригинальные акварельные работы.<br>Каждая — история света и настроения.</p>
+      <a href="gallery.html" class="btn">Смотреть работы</a>
+    </div>
+    <div class="hero-image">
+      <span>[ картина художника ]</span>
+    </div>
+  </section>
+
+  <!-- РАБОТЫ -->
+  <section class="works">
+    <h2>Работы</h2>
+    <div class="works-grid" id="works-grid">
+      <!-- карточки подгрузятся из Supabase -->
+    </div>
+    <a href="gallery.html" class="btn">Перейти в галерею</a>
+  </section>
+
+  <!-- О ХУДОЖНИКЕ -->
+  <section class="about-preview">
+    <div class="about-preview-text">
+      <p class="label">О художнике</p>
+      <h2>Юлия Маликова</h2>
+      <p>Акварельный художник из Алматы. Пишет пейзажи, натюрморты и абстракции — работы которые приносят в дом тепло и свет.</p>
+      <a href="about.html" class="btn">Узнать больше</a>
+    </div>
+    <div class="about-preview-image">
+      <span>[ фото художника ]</span>
+    </div>
+  </section>
+
+</main>
+
+  <!-- ПОДВАЛ -->
+  <footer>
+    <span>© Юлия Маликова</span>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/juliya.malikova?igsh=MXRmaWE2aGp2em5uZw==" target="_blank">Instagram</a>
+      <a href="https://t.me/Yuliya_Malikova" target="_blank">Telegram</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
