@@ -40,6 +40,39 @@
 
     <main class="admin-main">
 
+      <div class="admin-section">
+        <h2>Настройки сайта</h2>
+        <div class="site-settings">
+
+          <div class="setting-block">
+            <p class="label">Главная картина</p>
+            <div class="setting-preview" id="hero-preview-wrap">
+              <img id="hero-preview-img" src="" alt="" style="display:none">
+              <span id="hero-preview-placeholder">[ не загружена ]</span>
+            </div>
+            <label class="upload-label">
+              Выбрать файл
+              <input type="file" id="hero-upload" accept="image/*" style="display:none">
+            </label>
+            <p class="form-status" id="hero-status"></p>
+          </div>
+
+          <div class="setting-block">
+            <p class="label">Фото художника</p>
+            <div class="setting-preview" id="artist-preview-wrap">
+              <img id="artist-preview-img" src="" alt="" style="display:none">
+              <span id="artist-preview-placeholder">[ не загружена ]</span>
+            </div>
+            <label class="upload-label">
+              Выбрать файл
+              <input type="file" id="artist-upload" accept="image/*" style="display:none">
+            </label>
+            <p class="form-status" id="artist-status"></p>
+          </div>
+
+        </div>
+      </div>
+
       <div class="admin-toolbar">
         <h2>Картины</h2>
         <button class="btn" id="add-btn">+ Добавить картину</button>
