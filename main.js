@@ -7,6 +7,7 @@ async function loadFeaturedPaintings() {
     .select('*')
     .eq('is_featured', true)
     .eq('is_visible', true)
+    .order('sort_order', { ascending: true })
     .limit(4);
 
   if (error || !data || data.length === 0) {
@@ -46,3 +47,20 @@ if (contactForm) {
     }
   });
 }
+
+async function loadSiteImages() {
+  const { data: heroData } = db.storage.from('artist').getPublicUrl('hero.jpg');
+  const { data: artistData } = db.storage.from('artist').getPublicUrl('artist.jpg');
+
+  const heroWrap = document.querySelector('.hero-image');
+  if (heroWrap) {
+    heroWrap.innerHTML = `<img src="${heroData.publicUrl}?t=${Date.now()}" alt="Картина художника" style="width:100%;height:100%;object-fit:cover;border-radius:4px">`;
+  }
+
+  const artistWrap = document.querySelector('.about-preview-image');
+  if (artistWrap) {
+    artistWrap.innerHTML = `<img src="${artistData.publicUrl}?t=${Date.now()}" alt="Юлия Маликова" style="width:100%;height:100%;object-fit:cover;border-radius:4px">`;
+  }
+}
+
+loadSiteImages();
