@@ -77,9 +77,9 @@ body { background: var(--bg); }
 }
 
 .admin-card-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
 }
 
 .admin-card-actions button {
@@ -123,14 +123,15 @@ body { background: var(--bg); }
   z-index: 201;
   background: var(--bg);
   width: 90vw;
-  max-width: 600px;
-  max-height: 90vh;
+  max-width: 680px;
+  max-height: 92vh;
   overflow-y: auto;
-  border-radius: 4px;
-  padding: 48px;
+  border-radius: 6px;
+  padding: 48px 52px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
+  box-shadow: 0 24px 64px rgba(44, 37, 32, 0.18);
 }
 
 .edit-form {
@@ -143,7 +144,7 @@ body { background: var(--bg); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  align-items: end;
+  align-items: start
 }
 
 .form-group select {
@@ -177,12 +178,18 @@ body { background: var(--bg); }
   color: var(--bg);
   border-color: var(--text);
   padding: 8px 24px;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.15s ease, opacity 0.15s ease;
 }
 
 .btn-primary:hover {
   background: var(--brown);
   border-color: var(--brown);
   color: var(--bg);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.97);
+  opacity: 0.85;
 }
 
 .modal {
@@ -192,6 +199,8 @@ body { background: var(--bg); }
   z-index: 200;
   align-items: center;
   justify-content: center;
+  background: rgba(44, 37, 32, 0.55);
+  backdrop-filter: blur(4px);
 }
 
 .modal.open {
@@ -282,4 +291,258 @@ body { background: var(--bg); }
 .order-input:focus {
   outline: none;
   border-color: var(--brown);
+}
+
+/* ===== АДАПТИВ АДМИНКИ ===== */
+@media (max-width: 768px) {
+  .admin-main {
+    padding: 24px 16px;
+  }
+
+  .admin-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .admin-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .site-settings {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-modal-content {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    border-radius: 0;
+    padding: 24px 20px;
+    overflow-y: auto;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-card-actions {
+    gap: 6px;
+  }
+
+  .admin-card-actions button {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .login-box {
+    padding: 32px 24px;
+    margin: 20px;
+  }
+}
+
+/* ===== ФОРМЫ ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group textarea {
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 12px 16px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--brown);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Статус-сообщения */
+.form-status {
+  font-size: 0.8rem;
+  color: var(--brown);
+  min-height: 1.2em;
+}
+
+/* Логин-бокс тоже */
+.login-box .form-group label {
+  display: block;
+}
+
+#edit-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: var(--bg-accent);
+}
+
+/* ПРЕВЬЮ НЕСКОЛЬКИХ ФОТО */
+.edit-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.edit-preview-item {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.edit-preview-item:hover {
+  border-color: var(--beige);
+}
+
+.edit-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-preview-item.is-cover {
+  border-color: var(--brown);
+}
+
+.edit-preview-item .cover-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--brown);
+  color: var(--bg);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.edit-preview-item .remove-photo {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(44,37,32,0.65);
+  color: white;
+  border: none;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.edit-preview-item:hover .remove-photo {
+  opacity: 1;
+}
+
+/* ТЕГИ В ФОРМЕ */
+.tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tag-chips .chip {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.tag-chips .chip:hover {
+  border-color: var(--text);
+}
+
+.tag-chips .chip.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+/* РАЗДЕЛИТЕЛИ В ФОРМЕ */
+.edit-form .form-row {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  align-items: stretch;
+}
+
+.edit-form .form-row .form-group input,
+.edit-form .form-row .form-group select {
+  height: 100%;
+}
+
+.edit-form .form-group {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.edit-form .form-group:last-of-type,
+.edit-form .form-row:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* ЗАГОЛОВОК МОДАЛКИ */
+.edit-modal-content > h2 {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+/* КНОПКИ ДЕЙСТВИЙ */
+.edit-actions {
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
 }

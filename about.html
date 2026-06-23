@@ -4,18 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>О художнике — Юлия Маликова</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="alternate icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <header>
-    <a class="logo" href="index.html">Юлия Маликова</a>
-    <nav>
+  <a class="logo" href="index.html">YanArt</a>
+  <nav id="main-nav">
       <a href="gallery.html">Галерея</a>
       <a href="about.html" class="active">О художнике</a>
+      <a href="delivery.html">Доставка</a>
+      <a href="care.html">Уход</a>
       <a href="contacts.html">Контакты</a>
     </nav>
-  </header>
+  <button class="burger" id="burger" aria-label="Меню">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
   <main>
 
@@ -59,14 +70,17 @@
   </main>
 
   <footer>
-    <span>© 2025 Юлия Маликова</span>
+    <span>© YanArt</span>
     <div class="footer-links">
-      <a href="#">Instagram</a>
-      <a href="#">Telegram</a>
+      <a href="https://www.instagram.com/juliya.malikova?igsh=MXRmaWE2aGp2em5uZw==" target="_blank">Instagram</a>
+      <a href="https://t.me/Yuliya_Malikova" target="_blank">Telegram</a>
+      <a href="offer.html" class="offer-link">Публичная оферта</a>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Панель управления</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate icon" href="../favicon.ico">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/admin.css">
 </head>
@@ -31,7 +35,7 @@
   <div id="admin-screen" style="display:none">
 
     <header>
-      <a class="logo" href="../index.html">Юлия Маликова</a>
+      <a class="logo" href="../index.html">YanArt</a>
       <div style="display:flex;align-items:center;gap:24px">
         <span class="label">Панель управления</span>
         <button class="btn" id="logout-btn">Выйти</button>
@@ -93,22 +97,24 @@
       <h2 id="edit-title">Добавить картину</h2>
 
       <div class="edit-form">
+
         <div class="form-group">
           <label>Название *</label>
           <input type="text" id="edit-name">
         </div>
+
         <div class="form-group">
           <label>Описание</label>
           <textarea id="edit-desc" rows="3"></textarea>
         </div>
+
         <div class="form-row">
           <div class="form-group">
-            <label>Категория</label>
+            <label>Тип</label>
             <select id="edit-category">
               <option value="Пейзаж">Пейзаж</option>
-              <option value="Портрет">Портрет</option>
-              <option value="Абстракция">Абстракция</option>
               <option value="Натюрморт">Натюрморт</option>
+              <option value="Абстракция">Абстракция</option>
             </select>
           </div>
           <div class="form-group">
@@ -116,35 +122,84 @@
             <input type="number" id="edit-year" placeholder="2024">
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
-            <label>Размер</label>
-            <input type="text" id="edit-size" placeholder="60x80 см">
+            <label>Ширина (см)</label>
+            <input type="number" id="edit-width" placeholder="60">
           </div>
+          <div class="form-group">
+            <label>Высота (см)</label>
+            <input type="number" id="edit-height" placeholder="80">
+          </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group">
             <label>Материал</label>
             <input type="text" id="edit-material" placeholder="Акварель, бумага">
           </div>
+          <div class="form-group">
+            <label>Цена (₸)</label>
+            <input type="number" id="edit-price" placeholder="50000">
+          </div>
         </div>
+
+        <!-- ТЕГИ -->
         <div class="form-group">
-          <label>Цена (необязательно)</label>
-          <input type="text" id="edit-price" placeholder="50 000 ₸">
+          <label>Жанр</label>
+          <div class="tag-chips" data-tag="genre">
+            <button type="button" class="chip" data-value="ботаника">Ботаника</button>
+            <button type="button" class="chip" data-value="фуд-арт">Фуд-арт</button>
+            <button type="button" class="chip" data-value="детская иллюстрация">Детская</button>
+            <button type="button" class="chip" data-value="горы">Горы</button>
+            <button type="button" class="chip" data-value="животные">Животные</button>
+            <button type="button" class="chip" data-value="люди">Люди</button>
+          </div>
         </div>
+
+        <div class="form-group">
+          <label>Техника</label>
+          <div class="tag-chips" data-tag="technique">
+            <button type="button" class="chip" data-value="акварель">Акварель</button>
+            <button type="button" class="chip" data-value="графика">Графика</button>
+            <button type="button" class="chip" data-value="акварельная иллюстрация">Иллюстрация</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Назначение</label>
+          <div class="tag-chips" data-tag="purpose">
+            <button type="button" class="chip" data-value="кухня">Кухня</button>
+            <button type="button" class="chip" data-value="офис">Офис</button>
+            <button type="button" class="chip" data-value="кабинет">Кабинет</button>
+            <button type="button" class="chip" data-value="спальня">Спальня</button>
+            <button type="button" class="chip" data-value="салон">Салон</button>
+            <button type="button" class="chip" data-value="мастерская">Мастерская</button>
+          </div>
+        </div>
+
+        <!-- ФОТО -->
         <div class="form-group">
           <label>Фото картины *</label>
-          <input type="file" id="edit-image" accept="image/*">
-          <img id="edit-preview" src="" alt="" style="display:none;margin-top:12px;max-height:200px;border-radius:4px">
-        </div>
-        <div class="form-row">
-          <label class="checkbox-label">
-            <input type="checkbox" id="edit-visible" checked>
-            Показывать на сайте
+          <label class="upload-label" for="edit-images">
+            + Выбрать фото (можно несколько)
           </label>
+          <input type="file" id="edit-images" accept="image/*" multiple style="display:none">
+          <div class="edit-previews" id="edit-previews"></div>
+        </div>
+
+        <div class="form-row">
           <label class="checkbox-label">
             <input type="checkbox" id="edit-featured">
             На главной странице
           </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="edit-available" checked>
+            В наличии
+          </label>
         </div>
+
       </div>
 
       <div class="edit-actions">

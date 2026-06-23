@@ -5,42 +5,6 @@
   gap: 12px;
 }
 
-.gallery-filters {
-  padding: 0 48px 40px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 500;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 8px 20px;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-}
-
-.gallery-grid {
-  padding: 0 48px 80px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-}
-
 /* МОДАЛЬНОЕ ОКНО */
 .modal {
   display: none;
@@ -145,70 +109,648 @@
 .modal-prev,
 .modal-next {
   position: absolute;
-  bottom: 24px;
-  background: rgba(0,0,0,0.4);
-  border: none;
+  background: #0000005d;
+  border: 1px solid rgba(253, 250, 246, 0.6);
   color: white;
   width: 40px;
   height: 40px;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 50%;
+  border-radius: 2px;
   z-index: 202;
-  transition: background 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(4px);
 }
 
-.modal-prev { right: 60px; bottom: 20px; left: auto; }
-.modal-next { right: 16px; bottom: 20px; left: auto; }
+.modal-prev:hover {
+  background: rgba(253, 250, 246, 0.45);
+}
+
+.modal-next:hover {
+  background: rgba(253, 250, 246, 0.45);
+}
+
+.modal-prev { right: 60px; bottom: 28px; }
+.modal-next { right: 16px; bottom: 28px; }
 
 .modal-prev:hover,
 .modal-next:hover {
   background: rgba(0,0,0,0.7);
 }
 
-@media (max-width: 768px) {
+/* ТОЧКИ В МОДАЛКЕ */
+.modal-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.modal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.25s ease, transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.modal-dot.active {
+  background: var(--brown);
+  transform: scale(1.25);
+}
+
+/* КАРТОЧКИ */
+.painting-card {
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  padding: 10px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.painting-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.15s ease;
+}
+
+/* ТОЧКИ НА КАРТОЧКЕ */
+.card-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.card-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.card-dot.active {
+  background: white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.4);
+  transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+/* БЕЙДЖ "ПРОДАНО" НА КАРТОЧКЕ — ДИАГОНАЛЬНАЯ ЛЕНТА */
+.sold-badge {
+  position: absolute;
+  top: 26px;
+  left: -42px;
+  z-index: 3;
+  width: 170px;
+  background: linear-gradient(135deg, #d6493a 0%, #b6362a 60%, #9e2e23 100%);
+  color: var(--bg);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 7px 0;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.sold-badge::before,
+.sold-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.sold-badge::before {
+  left: 0;
+  border-width: 7px 7px 7px 0;
+  border-color: transparent #7a2218 transparent transparent;
+}
+
+.sold-badge::after {
+  right: 0;
+  border-width: 7px 0 7px 7px;
+  border-color: transparent transparent transparent #7a2218;
+}
+
+.painting-card.is-sold img {
+  filter: grayscale(0.35) brightness(0.92);
+}
+
+.painting-card.is-sold:hover .card-overlay {
+  opacity: 1;
+}
+
+/* БЕЙДЖ "ПРОДАНО" В МОДАЛКЕ */
+/* БЕЙДЖ "ПРОДАНО" В МОДАЛКЕ — ИМИТАЦИЯ ШТАМПА */
+.sold-badge-modal {
+  display: inline-block;
+  background: transparent;
+  color: #c0392b;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border: 1.5px solid #c0392b;
+  border-radius: 3px 1px 3px 1px;
+  width: fit-content;
+  box-shadow: 0 0 0 1px rgba(192, 57, 43, 0.15);
+}
+
+/* ===== ПАНЕЛЬ ФИЛЬТРОВ ===== */
+
+/* Мобильная кнопка "Фильтры" — скрыта на десктопе */
+.filters-mobile-bar {
+  display: none;
+}
+
+/* Кнопка сворачивания — скрыта по умолчанию, показывается только на десктопе */
+.filters-float-toggle {
+  display: none;
+}
+
+/* Оверлей под мобильным drawer */
+.filters-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 37, 32, 0.5);
+  z-index: 299;
+}
+
+.filters-overlay.open {
+  display: block;
+}
+
+/* Кнопка закрытия в шапке панели — только мобильная */
+.filters-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text);
+  padding: 0;
+  line-height: 1;
+}
+
+/* Шапка панели фильтров */
+.filters-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.filters-panel-head .label {
+  flex: 1;
+}
+
+.filters-reset {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  color: var(--brown);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.filters-reset:hover {
+  color: var(--text);
+}
+
+/* Группы фильтров */
+.filter-group {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.filter-group:last-child {
+  border-bottom: none;
+}
+
+.filter-group-label {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+/* Чипсы */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 5px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--text);
+}
+
+.chip.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+/* Счётчик */
+.gallery-count {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.gallery-count-bar {
+  padding: 4px 0 20px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding-bottom: 40px;
+  }
+
+/* ===== ДЕСКТОП (>900px) ===== */
+@media (min-width: 901px) {
+/* Кнопка-стрелка сворачивания */
+  .filters-float-toggle {
+    display: flex;
+    position: fixed;
+top: 50%;
+transform: translateY(-50%);
+left: 0;
+align-self: unset;
+    width: 34px;
+    height: 64px;
+    background: var(--bg-accent);
+    border: 1px solid var(--border);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    color: var(--brown);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 10;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    box-shadow: 2px 0 8px rgba(44, 37, 32, 0.06);
+  }
+
+  .filters-float-toggle:hover {
+    background: var(--beige);
+    border-color: var(--beige);
+    color: var(--bg);
+  }
+
+  .filters-float-toggle svg {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .gallery-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    align-items: start;
+    padding: 0 48px 80px;
+    transition: grid-template-columns 0.3s ease;
+    column-gap: 0;
+  }
+
+  .gallery-layout > .gallery-main {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Свёрнутое состояние */
+  .gallery-layout.filters-collapsed {
+  grid-template-columns: 0px 1fr;
+}
+
+  .gallery-layout.filters-collapsed .filters-float-toggle svg {
+    transform: rotate(180deg);
+  }
+
+  /* Сайдбар */
+  .filters-panel {
+    position: sticky;
+    top: 72px;
+    max-height: calc(100vh - 96px);
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+    transition: opacity 0.2s ease;
+  }
+
+  .filters-panel.collapsed {
+    opacity: 0;
+    pointer-events: none;
+    border-right-color: transparent;
+  }
+
+  /* Внутренняя обёртка фиксированной ширины — не даёт тексту обрезаться */
+  .filters-panel-inner {
+    width: 260px;
+    padding-right: 32px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 96px);
+  }
+
+  .gallery-main {
+    padding-left: 32px;
+    min-width: 0;
+  }
+}
+
+/* ===== МОБИЛЬНЫЙ (≤900px) ===== */
+@media (max-width: 900px) {
+  .gallery-header {
+    padding: 40px 20px 20px;
+  }
+
+  .filters-mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 16px;
+    margin-top: 4px;
+  }
+
+  .filters-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .filters-toggle-btn:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .gallery-layout {
+    display: block;
+    padding: 0 20px 48px;
+  }
+
+  .gallery-main {
+    padding-left: 0;
+  }
+
+  /* Drawer снизу */
+  .filters-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    max-height: 80vh;
+    max-height: 80dvh;
+    overflow-y: auto;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    z-index: 300;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.12);
+  }
+
+  .filters-panel.open {
+    transform: translateY(0);
+  }
+
+  .filters-panel-inner {
+    padding: 0 20px 32px;
+  }
+
+  .filters-close-btn {
+    display: block;
+  }
+
+  .filters-panel-head {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding-top: 20px;
+    z-index: 1;
+  }
+
+  .gallery-count-bar {
+    display: none;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
   .modal-content {
     grid-template-columns: 1fr;
-    grid-template-rows: 55vh 1fr;
+    grid-template-rows: 50vh 1fr;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     border-radius: 0;
   }
 
   .modal-image-wrap {
-    height: 55vh;
+    height: 50vh;
+    height: 50dvh;
   }
 
   .modal-info {
     border-left: none;
     border-top: 1px solid var(--border);
-    padding: 24px 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .gallery-header,
-  .gallery-filters,
-  .gallery-grid {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .modal-content {
-    grid-template-columns: 1fr;
-    max-height: 95vh;
+    padding: 20px;
     overflow-y: auto;
   }
 
-  .modal-image-wrap {
-    aspect-ratio: 4/3;
-    height: auto;
+  .modal-info h2 {
+    font-size: 1.4rem;
   }
+
+  .modal-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .modal-prev {
+    right: 60px;
+    bottom: 16px;
+  }
+
+  .modal-next {
+    right: 12px;
+    bottom: 16px;
+  }
+
+  .modal-dots {
+    bottom: 12px;
+  }
+}
+
+/* ЗАГРУЗКА ФОТО В МОДАЛКЕ */
+.modal-image-wrap {
+  position: relative;
+}
+
+.modal-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.06) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: modal-shimmer 1.2s infinite;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.modal-image-wrap:has(img:not(.loaded))::after {
+  opacity: 1;
+}
+
+@keyframes modal-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+#modal-img {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#modal-img.loaded {
+  opacity: 1;
+}
+
+.card-prev,
+.card-next {
+  position: absolute;
+  bottom: 12px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.5);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: background 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.card-prev { right: 44px; }
+.card-next { right: 12px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .painting-card:hover .card-prev,
+  .painting-card:hover .card-next {
+    display: flex;
+  }
+}
+
+.card-prev:hover,
+.card-next:hover {
+  background: rgba(0,0,0,0.6);
+}
+
+.painting-card {
+  position: relative;
+}
+
+.painting-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: modal-shimmer 1.2s infinite;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 1;
+}
+
+.painting-card:has(img.card-img-loading)::after {
+  opacity: 1;
+}
+
+.painting-card img.card-img-loading {
+  opacity: 0.15;
 }

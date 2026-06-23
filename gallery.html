@@ -3,19 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Галерея — Юлия Маликова</title>
+  <title>Галерея — YanArt</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
 
   <header>
-    <a class="logo" href="index.html">Юлия Маликова</a>
-    <nav>
+    <a class="logo" href="index.html">YanArt</a>
+    <nav id="main-nav">
       <a href="gallery.html" class="active">Галерея</a>
       <a href="about.html">О художнике</a>
+      <a href="delivery.html">Доставка</a>
+      <a href="care.html">Уход</a>
       <a href="contacts.html">Контакты</a>
     </nav>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
 
   <main>
@@ -23,19 +34,142 @@
     <section class="gallery-header">
       <p class="label">Все работы</p>
       <h1>Галерея</h1>
+      <!-- МОБИЛЬНАЯ КНОПКА ФИЛЬТРОВ -->
+      <div class="filters-mobile-bar">
+        <button class="filters-toggle-btn" id="filters-toggle-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
+          Фильтры
+        </button>
+        <span class="gallery-count" id="gallery-count"></span>
+      </div>
     </section>
 
-    <section class="gallery-filters">
-      <button class="filter-btn active" data-category="all">Все</button>
-      <button class="filter-btn" data-category="Пейзаж">Пейзажи</button>
-      <button class="filter-btn" data-category="Портрет">Портреты</button>
-      <button class="filter-btn" data-category="Абстракция">Абстракция</button>
-      <button class="filter-btn" data-category="Натюрморт">Натюрморт</button>
-    </section>
+    <div class="gallery-layout">
 
-    <section class="gallery-grid" id="gallery-grid">
-      <!-- карточки подгрузятся из Supabase -->
-    </section>
+      <!-- ПАНЕЛЬ ФИЛЬТРОВ (сайдбар десктоп / drawer мобильный) -->
+      <aside class="filters-panel" id="filters-panel">
+        <div class="filters-panel-inner">
+
+          <div class="filters-panel-head">
+            <span class="label">Фильтры</span>
+            <button class="filters-reset" id="filters-reset">Сбросить</button>
+            <button class="filters-close-btn" id="filters-close-btn" aria-label="Закрыть">✕</button>
+          </div>
+
+          <!-- ТИП -->
+          <div class="filter-group">
+            <p class="filter-group-label">Тип</p>
+            <div class="filter-chips" data-filter="type">
+              <button class="chip" data-value="Пейзаж">Пейзаж</button>
+              <button class="chip" data-value="Натюрморт">Натюрморт</button>
+              <button class="chip" data-value="Абстракция">Абстракция</button>
+            </div>
+          </div>
+
+          <!-- ЖАНР -->
+          <div class="filter-group">
+            <p class="filter-group-label">Жанр</p>
+            <div class="filter-chips" data-filter="genre">
+              <button class="chip" data-value="ботаника">Ботаника</button>
+              <button class="chip" data-value="фуд-арт">Фуд-арт</button>
+              <button class="chip" data-value="детская иллюстрация">Детская</button>
+              <button class="chip" data-value="горы">Горы</button>
+              <button class="chip" data-value="животные">Животные</button>
+              <button class="chip" data-value="люди">Люди</button>
+            </div>
+          </div>
+
+          <!-- ТЕХНИКА -->
+          <div class="filter-group">
+            <p class="filter-group-label">Техника</p>
+            <div class="filter-chips" data-filter="technique">
+              <button class="chip" data-value="акварель">Акварель</button>
+              <button class="chip" data-value="графика">Графика</button>
+              <button class="chip" data-value="акварельная иллюстрация">Иллюстрация</button>
+            </div>
+          </div>
+
+          <!-- НАЗНАЧЕНИЕ -->
+          <div class="filter-group">
+            <p class="filter-group-label">Назначение</p>
+            <div class="filter-chips" data-filter="purpose">
+              <button class="chip" data-value="кухня">Кухня</button>
+              <button class="chip" data-value="офис">Офис</button>
+              <button class="chip" data-value="кабинет">Кабинет</button>
+              <button class="chip" data-value="спальня">Спальня</button>
+              <button class="chip" data-value="салон">Салон</button>
+              <button class="chip" data-value="мастерская">Мастерская</button>
+            </div>
+          </div>
+
+          <!-- РАЗМЕР -->
+          <div class="filter-group">
+            <p class="filter-group-label">Размер</p>
+            <div class="filter-chips" data-filter="size">
+              <button class="chip" data-value="Маленький">Маленький</button>
+              <button class="chip" data-value="Средний">Средний</button>
+              <button class="chip" data-value="Большой">Большой</button>
+            </div>
+          </div>
+
+          <!-- ФОРМА -->
+          <div class="filter-group">
+            <p class="filter-group-label">Форма</p>
+            <div class="filter-chips" data-filter="shape">
+              <button class="chip" data-value="Квадрат">Квадрат</button>
+              <button class="chip" data-value="Прямоугольник">Прямоугольник</button>
+            </div>
+          </div>
+
+          <!-- ЦЕНА -->
+          <div class="filter-group">
+            <p class="filter-group-label">Цена</p>
+            <div class="filter-chips" data-filter="price">
+              <button class="chip" data-value="0-30000">До 30 000 ₸</button>
+              <button class="chip" data-value="30000-60000">30 000 – 60 000 ₸</button>
+              <button class="chip" data-value="60000-100000">60 000 – 100 000 ₸</button>
+              <button class="chip" data-value="100000+">Выше 100 000 ₸</button>
+            </div>
+          </div>
+
+          <!-- НАЛИЧИЕ -->
+          <div class="filter-group">
+            <p class="filter-group-label">Наличие</p>
+            <div class="filter-chips" data-filter="available">
+              <button class="chip" data-value="true">В наличии</button>
+              <button class="chip" data-value="false">Продано</button>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- ОВЕРЛЕЙ ДЛЯ МОБИЛЬНОГО DRAWER -->
+      <div class="filters-overlay" id="filters-overlay"></div>
+
+      <!-- ПРАВАЯ ЧАСТЬ: счётчик + сетка -->
+      <div class="gallery-main">
+        <div class="gallery-count-bar">
+          <span class="gallery-count" id="gallery-count-desktop"></span>
+        </div>
+        <section class="gallery-grid" id="gallery-grid">
+          <!-- карточки подгрузятся из Supabase -->
+        </section>
+      </div>
+
+    </div><!-- /gallery-layout -->
+
+    <!-- КНОПКА СВОРАЧИВАНИЯ ФИЛЬТРОВ (вне грида) -->
+    <button class="filters-float-toggle" id="filters-collapse-btn" aria-label="Свернуть фильтры">
+      <svg width="26" height="20" viewBox="-3 -3 26 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+  <line x1="0" y1="2" x2="20" y2="2"/>
+  <circle cx="5" cy="2" r="2.5" fill="var(--bg-accent)" stroke="currentColor" stroke-width="1.8"/>
+  <line x1="0" y1="8" x2="20" y2="8"/>
+  <circle cx="14" cy="8" r="2.5" fill="var(--bg-accent)" stroke="currentColor" stroke-width="1.8"/>
+  <line x1="0" y1="14" x2="20" y2="14"/>
+  <circle cx="8" cy="14" r="2.5" fill="var(--bg-accent)" stroke="currentColor" stroke-width="1.8"/>
+</svg>
+    </button>
 
   </main>
 
@@ -52,27 +186,31 @@
       <div class="modal-info">
         <p class="label" id="modal-category"></p>
         <h2 id="modal-title"></h2>
+        <span id="modal-sold-badge" class="sold-badge-modal" style="display:none">Продано</span>
+        <div class="modal-dots" id="modal-dots" style="display:none"></div>
         <p id="modal-desc"></p>
         <div class="modal-meta">
-  <span id="modal-size"></span>
-  <span id="modal-material"></span>
-  <span id="modal-year"></span>
-  <span id="modal-price"></span>
-</div>
+          <span id="modal-size"></span>
+          <span id="modal-material"></span>
+          <span id="modal-year"></span>
+          <span id="modal-price"></span>
+        </div>
       </div>
     </div>
   </div>
 
   <footer>
-    <span>© Юлия Маликова</span>
+    <span>© YanArt</span>
     <div class="footer-links">
       <a href="https://www.instagram.com/juliya.malikova?igsh=MXRmaWE2aGp2em5uZw==" target="_blank">Instagram</a>
       <a href="https://t.me/Yuliya_Malikova" target="_blank">Telegram</a>
+      <a href="offer.html" class="offer-link">Публичная оферта</a>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
   <script src="js/gallery.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>
